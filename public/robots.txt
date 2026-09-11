@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /saved
+Disallow: /history
+Disallow: /hidden
+Disallow: /settings
