@@ -3,7 +3,11 @@
 </p>
 <h1 align="center">Hackerly</h1>
 <p align="center">A calm, keyboard-first reader for Hacker News.</p>
-<p align="center"><a href="https://hackerly.vercel.app"><strong>hackerly.vercel.app</strong></a></p>
+<p align="center">
+  <a href="https://hackerly.vercel.app"><strong>hackerly.vercel.app</strong></a>
+  &nbsp;·&nbsp;
+  <a href="https://g1lg1l.github.io/hackerly/"><strong>g1lg1l.github.io/hackerly</strong></a>
+</p>
 
 <br>
 
@@ -58,6 +62,14 @@ npm run build        # production build in .output/
 ## Deploying
 
 The live site runs on [Vercel](https://vercel.com): import the repository and deploy. Nuxt detects the platform, the route rules in `nuxt.config.ts` cache rendered pages at the edge with background revalidation, and Vercel Analytics and Speed Insights are enabled through their Nuxt modules. Any Node host works too: `npm run build`, then `node .output/server/index.mjs`.
+
+The same repository also deploys to **GitHub Pages** through `.github/workflows/pages.yml` on every push to `main` (enable it once under Settings → Pages → Source: GitHub Actions). Pages has no server, so that build is a static single-page app: no server rendering or edge cache, and the browser fetches from the Hacker News and Algolia APIs directly using the same code in `shared/utils/hn.ts`. The workflow serves it under `/<repo>/`; set `NUXT_APP_BASE_URL` to `/` there when using a custom domain. To build it locally:
+
+```sh
+NITRO_PRESET=github-pages NUXT_APP_BASE_URL=/hackerly/ npx nuxt generate   # output in .output/public
+```
+
+(Git Bash on Windows rewrites `/hackerly/` into a Windows path; prefix the command with `MSYS2_ENV_CONV_EXCL=NUXT_APP_BASE_URL`.)
 
 ## How it works
 

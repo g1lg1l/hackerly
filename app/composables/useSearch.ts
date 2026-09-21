@@ -7,6 +7,7 @@ export function useSearch(query: Ref<string>) {
   const searching = ref(false)
   const failed = ref(false)
   let latest = ''
+  const api = useApi()
 
   watch(query, (value) => {
     latest = value.trim()
@@ -21,7 +22,7 @@ export function useSearch(query: Ref<string>) {
       const term = value.trim()
       if (!term) return
       try {
-        const { items } = await $fetch<{ items: Story[] }>('/api/search', { query: { q: term } })
+        const { items } = await api.search(term)
         if (term === latest) results.value = items
       } catch {
         if (term === latest) {

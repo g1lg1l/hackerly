@@ -27,8 +27,10 @@ const route = useRoute()
 const feed = computed<FeedType>(() => (route.params.feed as FeedType) || 'top')
 const page = computed(() => Math.max(1, Math.floor(Number(route.query.p)) || 1))
 
-const { data, pending, error, refresh } = await useFetch<FeedPage>(
-  () => `/api/feed/${feed.value}?p=${page.value}`,
+const api = useApi()
+const { data, pending, error, refresh } = await useAsyncData<FeedPage>(
+  () => `feed:${feed.value}:${page.value}`,
+  () => api.feed(feed.value, page.value),
   {
     lazy: true,
     getCachedData: fresh(5 * 60_000),

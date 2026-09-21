@@ -4,8 +4,8 @@ import type { UserPage } from '#shared/types/hn'
 const route = useRoute()
 const router = useRouter()
 const id = String(route.params.id)
-const { data, error, pending } = await useFetch<UserPage>(`/api/user/${encodeURIComponent(id)}`, {
-  key: `user:${id}`,
+const api = useApi()
+const { data, error, pending } = await useAsyncData<UserPage>(`user:${id}`, () => api.user(id), {
   lazy: true,
   getCachedData: fresh(10 * 60_000),
 })

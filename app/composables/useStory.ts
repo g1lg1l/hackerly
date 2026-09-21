@@ -3,6 +3,7 @@ import type { CommentNode, CommentsPage, ItemPage } from '#shared/types/hn'
 /** Story page data: the item, its comments in batches, and a full refresh. */
 export async function useStory(id: number) {
   const nuxtApp = useNuxtApp()
+  const api = useApi()
   const { show } = useToast()
   // Extra batches live in session state, so coming back to the page keeps them.
   const extra = useState<CommentNode[]>(`more:${id}`, () => [])
@@ -12,8 +13,7 @@ export async function useStory(id: number) {
     data,
     error,
     refresh: refreshItem,
-  } = await useFetch<ItemPage>(`/api/item/${id}`, {
-    key: `item:${id}`,
+  } = await useAsyncData<ItemPage>(`item:${id}`, () => api.item(id), {
     lazy: true,
     getCachedData: fresh(10 * 60_000),
   })
@@ -31,8 +31,7 @@ export async function useStory(id: number) {
   // Small discussions render on the server; big ones stream in after hydration.
   // Composables called after an await need the Nuxt context restored explicitly; on the server this returns a promise.
   const thread = await nuxtApp.runWithContext(() =>
-    useFetch<CommentsPage>(`/api/comments/${id}`, {
-      key: `comments:${id}`,
+    useAsyncData<CommentsPage>(`comments:${id}`, () => api.comments(id), {
       lazy: true,
       server: (data.value?.item.descendants ?? 0) <= 120,
       getCachedData: fresh(10 * 60_000),
@@ -54,7 +53,7 @@ export async function useStory(id: number) {
     if (skip == null || loadingMore.value) return
     loadingMore.value = true
     try {
-      const batch = await $fetch<CommentsPage>(`/api/comments/${id}`, { query: { skip } })
+      const batch = await api.comments(id, skip)
       extra.value = [...extra.value, ...batch.comments]
       nextBatch.value = batch.next
     } catch {
