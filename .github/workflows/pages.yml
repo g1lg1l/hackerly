@@ -34,6 +34,9 @@ jobs:
           # Project site lives under /<repo>/. Set to / when serving from a custom domain.
           NUXT_APP_BASE_URL: /${{ github.event.repository.name }}/
       - uses: actions/configure-pages@v5
+        with:
+          # Creates the Pages site (source: GitHub Actions) on first run, so no manual setup is needed.
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .output/public
