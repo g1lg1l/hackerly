@@ -6,21 +6,21 @@ import { createHnApi, directSource } from '#shared/utils/hn'
 export const api = createHnApi({
   ids: defineCachedFunction(directSource.ids, {
     name: 'ids',
-    maxAge: 60,
-    staleMaxAge: 600,
+    maxAge: 300,
+    staleMaxAge: 3600,
     getKey: (feed: FeedType) => feed,
   }),
   item: defineCachedFunction(directSource.item, {
     name: 'item',
-    maxAge: 60,
-    staleMaxAge: 3600,
+    maxAge: 300,
+    staleMaxAge: 86400,
     getKey: (id: number) => String(id),
     validate: (e) => e.value != null,
   }),
   user: defineCachedFunction(directSource.user, {
     name: 'user',
-    maxAge: 300,
-    staleMaxAge: 3600,
+    maxAge: 3600,
+    staleMaxAge: 86400,
     getKey: (id: string) => id,
     validate: (e) => e.value != null,
   }),

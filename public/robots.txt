@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+# Millions of mirrored HN pages: crawling them only burns server time
+Disallow: /item/
+Disallow: /user/
 Disallow: /saved
 Disallow: /history
 Disallow: /hidden
