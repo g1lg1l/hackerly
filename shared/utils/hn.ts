@@ -15,7 +15,7 @@ import { decodeEntities, sanitizeHn } from './sanitize.ts'
 
 /**
  * Everything the app knows about Hacker News, independent of where it runs.
- * On Vercel the server routes wrap a cached source; the static build calls this from the browser.
+ * With a server, the routes wrap a cached source; the static build calls this from the browser.
  */
 
 const HN = 'https://hacker-news.firebaseio.com/v0'

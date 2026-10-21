@@ -3,7 +3,7 @@ import { createHnApi, directSource, search, type HnApi } from '#shared/utils/hn'
 let direct: HnApi | undefined
 
 /**
- * Data access for pages and composables. With a server (Vercel), calls go through `/api/*`,
+ * Data access for pages and composables. With a server, calls go through `/api/*`,
  * which caches HN reads across visitors. Static builds (GitHub Pages) have no server, so the
  * browser runs the same code against Hacker News directly.
  */

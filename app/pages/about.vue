@@ -20,7 +20,7 @@ usePageMeta({ title: 'About', description: 'What Hackerly is, where its data com
       </p>
       <p>
         There are no accounts. Saved stories, reading history, hidden stories and your preferences live in
-        this browser only. Page views are counted anonymously with Vercel Analytics, without cookies. To vote,
+        this browser only. No page views are tracked, and there are no cookies. To vote,
         comment or submit, you’ll still want
         <a href="https://news.ycombinator.com" rel="noopener">news.ycombinator.com</a>; every story links back
         there.
